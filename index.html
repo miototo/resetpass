@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Reset Password</title>
+
 <style>
   body {
     font-family: Calibri, Arial, sans-serif;
@@ -11,7 +12,7 @@
   }
   table {
     border-collapse: collapse;
-    width: 420px;
+    width: 500px;
   }
   td {
     border: 1px solid #000;
@@ -35,20 +36,22 @@
     font-size: 14px;
     cursor: pointer;
   }
-  .notif {
+  #notif {
     margin-top: 8px;
-    font-size: 13px;
     color: green;
+    font-size: 13px;
     display: none;
   }
 </style>
 </head>
+
 <body>
 
+<form id="form">
 <table>
   <tr>
     <td class="label">User ID</td>
-    <td><input id="userid"></td>
+    <td><input id="userid" autofocus></td>
   </tr>
   <tr>
     <td class="label">LOGIN SITE</td>
@@ -56,10 +59,12 @@
   </tr>
 </table>
 
-<button onclick="generate()">Generate</button>
-<div class="notif" id="notif">Copied ✅</div>
+<button type="submit">Generate</button>
+<div id="notif">Copied ✅</div>
+</form>
 
 <script>
+  // ===== SETTING =====
   const LOGIN_SITE = "miotopi.com";
   const SUFFIX = "mio";
 
@@ -67,20 +72,24 @@
     return Math.floor(100 + Math.random() * 900) + SUFFIX;
   }
 
-  function generate() {
-    const userId = document.getElementById("userid").value;
-    const pass = randomPassword();
+  document.getElementById("form").addEventListener("submit", async function(e) {
+    e.preventDefault(); // supaya Enter tidak reload
+
+    const userIdInput = document.getElementById("userid");
+    const userId = userIdInput.value;
+    const password = randomPassword();
 
     const text =
 `User ID : ${userId}
-Password : ${pass}
+Password : ${password}
 
 SITUS LOGIN :
 🔶 ${LOGIN_SITE}
 
 Silakan di coba kembali bosku..... 😊`;
 
-    navigator.clipboard.writeText(text);
+    // auto copy
+    await navigator.clipboard.writeText(text);
 
     // notif
     const notif = document.getElementById("notif");
@@ -88,8 +97,9 @@ Silakan di coba kembali bosku..... 😊`;
     setTimeout(() => notif.style.display = "none", 1200);
 
     // kosongkan User ID
-    document.getElementById("userid").value = "";
-  }
+    userIdInput.value = "";
+    userIdInput.focus();
+  });
 </script>
 
 </body>
