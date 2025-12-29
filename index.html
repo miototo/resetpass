@@ -13,30 +13,10 @@
   }
 
   @keyframes neonPulse {
-    0% {
-      box-shadow: 0 0 6px rgba(255,0,0,0.6),
-                  0 0 14px rgba(255,0,0,0.7),
-                  0 0 28px rgba(255,0,0,0.8);
-      border-color: rgb(255,0,0);
-    }
-    33% {
-      box-shadow: 0 0 8px rgba(0,255,0,0.7),
-                  0 0 18px rgba(0,255,0,0.8),
-                  0 0 36px rgba(0,255,0,0.9);
-      border-color: rgb(0,255,0);
-    }
-    66% {
-      box-shadow: 0 0 8px rgba(0,160,255,0.7),
-                  0 0 18px rgba(0,160,255,0.8),
-                  0 0 36px rgba(0,160,255,0.9);
-      border-color: rgb(0,160,255);
-    }
-    100% {
-      box-shadow: 0 0 6px rgba(255,0,0,0.6),
-                  0 0 14px rgba(255,0,0,0.7),
-                  0 0 28px rgba(255,0,0,0.8);
-      border-color: rgb(255,0,0);
-    }
+    0% { box-shadow: 0 0 6px red, 0 0 14px red, 0 0 28px red; border-color:red }
+    33% { box-shadow: 0 0 8px lime, 0 0 18px lime, 0 0 36px lime; border-color:lime }
+    66% { box-shadow: 0 0 8px deepskyblue, 0 0 18px deepskyblue, 0 0 36px deepskyblue; border-color:deepskyblue }
+    100% { box-shadow: 0 0 6px red, 0 0 14px red, 0 0 28px red; border-color:red }
   }
 
   table {
@@ -45,21 +25,18 @@
     background: rgba(15,18,28,0.85);
     border-radius: 10px;
     border: 3px solid red;
-    animation: neonPulse 2s ease-in-out infinite;
-    backdrop-filter: blur(6px);
+    animation: neonPulse 2s infinite;
   }
 
   td {
     border: 1px solid rgba(255,255,255,0.15);
     padding: 10px;
     font-size: 14px;
-    color: #eaeaea;
   }
 
   td.label {
     width: 150px;
     font-weight: bold;
-    background: rgba(255,255,255,0.05);
     color: #9fdcff;
   }
 
@@ -67,32 +44,24 @@
     width: 100%;
     border: none;
     outline: none;
-    font-size: 14px;
     background: transparent;
     color: #fff;
-  }
+    font-size: 14px;
 
-  input::placeholder {
-    color: #888;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    caret-color: #4cff9a;
   }
 
   button {
     margin-top: 18px;
     width: 180px;
     height: 54px;
-    background: url("https://imgmio.io/images/2025/05/11/giff-miototo-logo.gif") center center no-repeat;
+    background: url("https://imgmio.io/images/2025/05/11/giff-miototo-logo.gif") center no-repeat;
     background-size: contain;
     border: none;
     cursor: pointer;
-    filter: drop-shadow(0 0 8px rgba(0,255,255,0.6));
-  }
-
-  button:hover {
-    filter: drop-shadow(0 0 14px rgba(0,255,255,0.95));
-  }
-
-  button:active {
-    transform: scale(0.94);
   }
 
   #notif {
@@ -100,18 +69,26 @@
     color: #4cff9a;
     font-size: 13px;
     display: none;
-    text-shadow: 0 0 6px rgba(76,255,154,0.8);
   }
 </style>
 </head>
 
 <body>
 
-<form id="form">
+<form id="form" autocomplete="off">
   <table>
     <tr>
       <td class="label">User ID</td>
-      <td><input id="userid" autofocus placeholder="Masukkan User ID"></td>
+      <td>
+        <input id="userid"
+          name="fake-user"
+          placeholder="Masukkan User ID"
+          autocomplete="new-password"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          readonly>
+      </td>
     </tr>
     <tr>
       <td class="label">LOGIN SITE</td>
@@ -119,28 +96,74 @@
     </tr>
   </table>
 
-  <button type="submit" title="Generate"></button>
+  <button type="submit"></button>
   <div id="notif">Copied ✅</div>
 </form>
 
 <script>
-  const LOGIN_SITE = "miowon.com";
-  const SUFFIX = "mio";
+/* ===============================
+   🔒 ANTI INSPECT / F12 / DEVTOOLS
+================================= */
 
-  function randomPassword() {
-    return Math.floor(100 + Math.random() * 900) + SUFFIX;
-  }
+const WARNING_TEXT = "THIS PRODUCT BY : KLVMTT\nJANGAN DI CURI BOS!";
 
-  document.getElementById("form").addEventListener("submit", async function(e) {
+// Disable right click
+document.addEventListener("contextmenu", e => {
+  alert(WARNING_TEXT);
+  e.preventDefault();
+});
+
+// Block shortcut keys
+document.addEventListener("keydown", e => {
+  if (
+    e.key === "F12" ||
+    (e.ctrlKey && e.shiftKey && ["I","J"].includes(e.key)) ||
+    (e.ctrlKey && e.key === "U")
+  ) {
+    alert(WARNING_TEXT);
     e.preventDefault();
+  }
+});
 
-    const userIdInput = document.getElementById("userid");
-    const userId = userIdInput.value.trim();
-    if (!userId) return;
+// Detect devtools opened
+(function(){
+  const threshold = 160;
+  setInterval(() => {
+    if (
+      window.outerWidth - window.innerWidth > threshold ||
+      window.outerHeight - window.innerHeight > threshold
+    ) {
+      alert(WARNING_TEXT);
+      location.reload();
+    }
+  }, 1000);
+})();
 
-    const password = randomPassword();
+/* ===============================
+   🔥 FITUR UTAMA
+================================= */
 
-    const text =
+const LOGIN_SITE = "miowon.com";
+const SUFFIX = "mio";
+const input = document.getElementById("userid");
+
+input.addEventListener("focus", () => {
+  input.removeAttribute("readonly");
+});
+
+function randomPassword() {
+  return Math.floor(100 + Math.random() * 900) + SUFFIX;
+}
+
+document.getElementById("form").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const userId = input.value.trim();
+  if (!userId) return;
+
+  const password = randomPassword();
+
+  const text =
 `User ID : ${userId}
 Password : ${password}
 
@@ -149,11 +172,9 @@ SITUS LOGIN :
 
 Silakan di coba kembali bosku..... 😊`;
 
-    await navigator.clipboard.writeText(text);
-
-    // 🔥 AUTO REFRESH LANGSUNG
-    location.reload();
-  });
+  await navigator.clipboard.writeText(text);
+  location.reload();
+});
 </script>
 
 </body>
