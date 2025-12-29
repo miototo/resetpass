@@ -12,34 +12,29 @@
     color: #fff;
   }
 
-  /* === NEON RGB PULSE === */
   @keyframes neonPulse {
     0% {
-      box-shadow:
-        0 0 6px rgba(255,0,0,0.6),
-        0 0 14px rgba(255,0,0,0.7),
-        0 0 28px rgba(255,0,0,0.8);
+      box-shadow: 0 0 6px rgba(255,0,0,0.6),
+                  0 0 14px rgba(255,0,0,0.7),
+                  0 0 28px rgba(255,0,0,0.8);
       border-color: rgb(255,0,0);
     }
     33% {
-      box-shadow:
-        0 0 8px rgba(0,255,0,0.7),
-        0 0 18px rgba(0,255,0,0.8),
-        0 0 36px rgba(0,255,0,0.9);
+      box-shadow: 0 0 8px rgba(0,255,0,0.7),
+                  0 0 18px rgba(0,255,0,0.8),
+                  0 0 36px rgba(0,255,0,0.9);
       border-color: rgb(0,255,0);
     }
     66% {
-      box-shadow:
-        0 0 8px rgba(0,160,255,0.7),
-        0 0 18px rgba(0,160,255,0.8),
-        0 0 36px rgba(0,160,255,0.9);
+      box-shadow: 0 0 8px rgba(0,160,255,0.7),
+                  0 0 18px rgba(0,160,255,0.8),
+                  0 0 36px rgba(0,160,255,0.9);
       border-color: rgb(0,160,255);
     }
     100% {
-      box-shadow:
-        0 0 6px rgba(255,0,0,0.6),
-        0 0 14px rgba(255,0,0,0.7),
-        0 0 28px rgba(255,0,0,0.8);
+      box-shadow: 0 0 6px rgba(255,0,0,0.6),
+                  0 0 14px rgba(255,0,0,0.7),
+                  0 0 28px rgba(255,0,0,0.8);
       border-color: rgb(255,0,0);
     }
   }
@@ -81,7 +76,6 @@
     color: #888;
   }
 
-  /* === GIF BUTTON === */
   button {
     margin-top: 18px;
     width: 180px;
@@ -114,19 +108,19 @@
 <body>
 
 <form id="form">
-<table>
-  <tr>
-    <td class="label">User ID</td>
-    <td><input id="userid" autofocus placeholder="Masukkan User ID"></td>
-  </tr>
-  <tr>
-    <td class="label">LOGIN SITE</td>
-    <td>🔶 miowon.com</td>
-  </tr>
-</table>
+  <table>
+    <tr>
+      <td class="label">User ID</td>
+      <td><input id="userid" autofocus placeholder="Masukkan User ID"></td>
+    </tr>
+    <tr>
+      <td class="label">LOGIN SITE</td>
+      <td>🔶 miowon.com</td>
+    </tr>
+  </table>
 
-<button type="submit" title="Generate"></button>
-<div id="notif">Copied ✅</div>
+  <button type="submit" title="Generate"></button>
+  <div id="notif">Copied ✅</div>
 </form>
 
 <script>
@@ -141,7 +135,9 @@
     e.preventDefault();
 
     const userIdInput = document.getElementById("userid");
-    const userId = userIdInput.value;
+    const userId = userIdInput.value.trim();
+    if (!userId) return;
+
     const password = randomPassword();
 
     const text =
@@ -157,10 +153,11 @@ Silakan di coba kembali bosku..... 😊`;
 
     const notif = document.getElementById("notif");
     notif.style.display = "block";
-    setTimeout(() => notif.style.display = "none", 1300);
 
-    userIdInput.value = "";
-    userIdInput.focus();
+    // ⏳ DELAY 1 DETIK → AUTO REFRESH
+    setTimeout(() => {
+      location.reload();
+    }, 1000);
   });
 </script>
 
