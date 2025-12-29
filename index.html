@@ -151,13 +151,8 @@ Silakan di coba kembali bosku..... 😊`;
 
     await navigator.clipboard.writeText(text);
 
-    const notif = document.getElementById("notif");
-    notif.style.display = "block";
-
-    // ⏳ DELAY 1 DETIK → AUTO REFRESH
-    setTimeout(() => {
-      location.reload();
-    }, 1000);
+    // 🔥 AUTO REFRESH LANGSUNG
+    location.reload();
   });
 </script>
 
